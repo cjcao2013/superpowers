@@ -1,0 +1,18 @@
+{
+  "_comment": "Fill in what TAP currently supports. Leave arrays empty [] if not yet implemented.",
+  "version": "0.1",
+  "import": {
+    "test_cases": [],
+    "test_data": []
+  },
+  "apis": {
+    "available": []
+  },
+  "execution": {
+    "variable_injection": false,
+    "supported_flags": []
+  },
+  "results": {
+    "formats": []
+  }
+}
