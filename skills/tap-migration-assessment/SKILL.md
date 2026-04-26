@@ -107,21 +107,21 @@ Look for `tap-capabilities.json` at project root or `~/.tap/capabilities.json`.
 >
 > ```json
 > {
->   "_comment": "Fill in what TAP currently supports. Leave arrays empty [] if not yet implemented.",
+>   "_comment": "Fill in what TAP currently supports. Remove examples that don't apply; leave arrays empty [] if not yet implemented.",
 >   "version": "0.1",
 >   "import": {
->     "test_cases": [],
->     "test_data": []
+>     "test_cases": ["csv", "json"],
+>     "test_data": ["csv", "xlsx"]
 >   },
 >   "apis": {
->     "available": []
+>     "available": ["/api/v1/testcases", "/api/v1/runs", "/api/v1/results"]
 >   },
 >   "execution": {
->     "variable_injection": false,
->     "supported_flags": []
+>     "variable_injection": true,
+>     "supported_flags": ["--env", "--tags", "--suite"]
 >   },
 >   "results": {
->     "formats": []
+>     "formats": ["junit-xml", "json"]
 >   }
 > }
 > ```
