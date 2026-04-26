@@ -10,9 +10,8 @@
     "available": []
   },
   "execution": {
-    "_comment": "variable_injection: set to true if TAP can pass runtime variables (e.g. ENV, BASE_URL) into the test runner when triggering a run. supported_flags: flags TAP forwards to the test runner command (e.g. '--env', '--tags').",
-    "variable_injection": false,
-    "supported_flags": []
+    "_comment": "Set to true if TAP can pass runtime parameters (environment variables, CLI flags) to the test runner when triggering a run.",
+    "variable_injection": false
   },
   "results": {
     "_comment": "Result formats TAP can collect and parse after a run completes (e.g. 'junit-xml', 'json', 'html').",
