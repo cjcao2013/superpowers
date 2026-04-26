@@ -107,21 +107,24 @@ Look for `tap-capabilities.json` at project root or `~/.tap/capabilities.json`.
 >
 > ```json
 > {
->   "_comment": "Fill in what TAP currently supports. Remove examples that don't apply; leave arrays empty [] if not yet implemented.",
 >   "version": "0.1",
 >   "import": {
->     "test_cases": ["csv", "json"],
->     "test_data": ["csv", "xlsx"]
+>     "_comment": "File formats TAP accepts when importing test cases and test data (e.g. 'csv', 'xlsx', 'json', 'xml'). Leave empty if not yet supported.",
+>     "test_cases": [],
+>     "test_data": []
 >   },
 >   "apis": {
->     "available": ["/api/v1/testcases", "/api/v1/runs", "/api/v1/results"]
+>     "_comment": "API endpoint paths TAP exposes that are relevant to migration — for registering test cases, triggering runs, and retrieving results (e.g. '/api/v1/testcases', '/api/v1/runs').",
+>     "available": []
 >   },
 >   "execution": {
->     "variable_injection": true,
->     "supported_flags": ["--env", "--tags", "--suite"]
+>     "_comment": "variable_injection: set to true if TAP can pass runtime variables (e.g. ENV, BASE_URL) into the test runner when triggering a run. supported_flags: flags TAP forwards to the test runner command (e.g. '--env', '--tags').",
+>     "variable_injection": false,
+>     "supported_flags": []
 >   },
 >   "results": {
->     "formats": ["junit-xml", "json"]
+>     "_comment": "Result formats TAP can collect and parse after a run completes (e.g. 'junit-xml', 'json', 'html').",
+>     "formats": []
 >   }
 > }
 > ```
