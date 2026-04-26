@@ -108,6 +108,10 @@ Look for `tap-capabilities.json` at project root or `~/.tap/capabilities.json`.
 > ```json
 > {
 >   "version": "0.1",
+>   "supported_frameworks": {
+>     "_comment": "Test frameworks TAP has been validated to work with end-to-end (e.g. 'pytest', 'robot-framework', 'junit', 'jest'). List only frameworks that have been tested — not assumed.",
+>     "frameworks": []
+>   },
 >   "import": {
 >     "_comment": "File formats TAP accepts when importing test cases and test data (e.g. 'csv', 'xlsx', 'json', 'xml'). Leave empty if not yet supported.",
 >     "test_cases": [],
@@ -140,6 +144,7 @@ Compare what the project needs (from Step 2 synthesis) against what TAP already 
 
 | Project Need | Where to Check in tap-capabilities.json |
 |---|---|
+| Test framework used by project | `supported_frameworks.frameworks` |
 | Test case import format | `import.test_cases` |
 | Test data import format | `import.test_data` |
 | Specific API endpoints needed | `apis.available` |

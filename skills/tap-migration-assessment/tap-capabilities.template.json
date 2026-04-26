@@ -1,5 +1,9 @@
 {
   "version": "0.1",
+  "supported_frameworks": {
+    "_comment": "Test frameworks TAP has been validated to work with end-to-end (e.g. 'pytest', 'robot-framework', 'junit', 'jest'). List only frameworks that have been tested — not assumed.",
+    "frameworks": []
+  },
   "import": {
     "_comment": "File formats TAP accepts when importing test cases and test data (e.g. 'csv', 'xlsx', 'json', 'xml'). Leave empty if not yet supported.",
     "test_cases": [],
