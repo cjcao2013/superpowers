@@ -1,3 +1,109 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Development Commands
+
+### Testing
+
+Run fast skill-behavior tests (default, ~2 min):
+```bash
+./tests/claude-code/run-skill-tests.sh
+```
+
+Run with integration tests (~10-30 min):
+```bash
+./tests/claude-code/run-skill-tests.sh --integration
+```
+
+Run a single test:
+```bash
+./tests/claude-code/run-skill-tests.sh --test test-subagent-driven-development.sh
+```
+
+Run verbose to see full Claude output:
+```bash
+./tests/claude-code/run-skill-tests.sh --verbose
+```
+
+Test whether a skill triggers on a natural-language prompt:
+```bash
+./tests/skill-triggering/run-test.sh <skill-name> <prompt-file>
+```
+
+### Version Management
+
+Check version sync across all platform manifests:
+```bash
+./scripts/bump-version.sh --check
+```
+
+Audit the repo for undeclared version strings:
+```bash
+./scripts/bump-version.sh --audit
+```
+
+Bump to a new version:
+```bash
+./scripts/bump-version.sh <X.Y.Z>
+```
+
+Version is declared in `package.json` and must stay in sync across `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `gemini-extension.json`. The `bump-version.sh` script handles all of them; `.version-bump.json` declares which files are tracked.
+
+### Syncing to Codex
+
+```bash
+./scripts/sync-to-codex-plugin.sh        # full run
+./scripts/sync-to-codex-plugin.sh -n     # dry run
+```
+
+## Architecture
+
+Superpowers is a **zero-dependency plugin** that ships a methodology for coding agents as composable "skills." There is no build step — everything is plain Markdown and shell scripts.
+
+### Skills (`skills/`)
+
+Each skill is a directory containing a `SKILL.md`. The skill file has YAML frontmatter (`name`, `description`) followed by the skill content that is injected into the agent's context when invoked. Skills must be:
+- General-purpose (not domain/project-specific)
+- Cross-harness compatible (Claude Code, Cursor, Codex, Gemini CLI)
+- Zero-dependency (no external tools or services)
+
+Skills are tested the same way as code — using a RED-GREEN-REFACTOR cycle with subagents as test subjects. See `skills/writing-skills/SKILL.md` for the full methodology.
+
+### Hooks (`hooks/`)
+
+The `hooks/hooks.json` registers a `SessionStart` hook that runs `hooks/session-start` (a bash script) on every new session or `/clear`/`/compact`. This injects the `using-superpowers` skill into the agent's context automatically, which then directs the agent to load other relevant skills via the `Skill` tool.
+
+`hooks/run-hook.cmd` is a cross-platform polyglot script (bash + Windows batch) that dispatches hook scripts without `.sh` extensions (to avoid Claude Code's Windows auto-detection interfering).
+
+### Platform Manifests
+
+| Platform | Directory |
+|---|---|
+| Claude Code | `.claude-plugin/` |
+| Cursor | `.cursor-plugin/` |
+| OpenAI Codex | `.codex-plugin/` |
+| Gemini CLI | `gemini-extension.json` |
+
+Each manifest declares how the plugin is installed for that harness. Skill files are the same across all platforms; only the manifest format differs.
+
+### Commands (`commands/`)
+
+The three files (`brainstorm.md`, `execute-plan.md`, `write-plan.md`) are deprecated slash commands. They redirect agents to the corresponding skills. Do not add new commands here.
+
+### Tests (`tests/`)
+
+| Directory | What it tests |
+|---|---|
+| `tests/claude-code/` | Skill content correctness — invokes `claude -p` headlessly |
+| `tests/skill-triggering/` | Whether naive prompts cause skills to auto-trigger |
+| `tests/brainstorm-server/` | Brainstorm server WebSocket protocol |
+| `tests/subagent-driven-dev/` | End-to-end subagent workflow |
+
+Test helpers in `tests/claude-code/test-helpers.sh` provide `run_claude`, `assert_contains`, `assert_not_contains`, `assert_order`, etc.
+
+---
+
 # Superpowers — Contributor Guidelines
 
 ## If You Are an AI Agent
